@@ -61,32 +61,55 @@ const commands = {
          } else {
             this.error('Wrong directory');
          }
-      }
+      },
+      async joke() {
+         const url = 'https://v2.jokeapi.dev/joke/Programming';
+         const res = await fetch(url);
+         const data = await res.json();
+         (async () => {
+            if (data.type == 'twopart') {
+               // clear the prompt so there's no flashing between animations
+               const prompt = this.get_prompt();
+               this.set_prompt('');
+               await this.echo(`Q: ${data.setup}`, {
+                  delay: 5,
+                  typing: true
+               });
+               await this.echo(`A: ${data.delivery}`, {
+                  delay: 50,
+                  typing: true
+               });
+               // restore the prompt
+               this.set_prompt(prompt);
+            } else if (data.type === 'single') {
+               await this.echo(data.joke, {
+                  delay: 50,
+                  typing: true
+               });
+            }
+         })();
+      },
    },
    private: {
       experience() {
-         terminal
-            //.echo(` 1 - <white>Solution Developer</white> at <a target="_blank" href="https://www.sintelix.com"><pink>Sintelix</pink></a>, 2023-Present`)
-            //.echo(` 2 - <white>Senior Data Analyst</white> at <a target="_blank" href="https://cdsirc.sa.gov.au/"><blue>CDSIRC, Department for Education</blue></a>, 2020-2023`)
-            //.echo(` 3 - <white>PhD Candidate in Neuroscience</white> at <green>University of Adelaide</green>, 2016-2020`)
-            .echo(`\nEntering Experience interpreter. Type "help" for a list of available commands.`);
+         terminal.echo(`Entering Experience interpreter. Type "help" for a list of available commands.`);
 
          this.push({
             help() {
-               terminal.echo(`List of available commands: ${formatter.format(['help', 'exit', 'Sintelix', 'CDSIRC', 'PhD'].map(cmd => { return `<white class="command">${cmd}</white>` }))}`);
+               terminal.echo(`List of available commands: ${formatter.format(['help', 'exit', 'Sintelix', 'CDSIRC', 'PhD'].map(cmd => { return `<white class="command">${cmd}</white>` }))}`, {delay: 20, typing: true});
             },
             Sintelix() {
                terminal.echo(`I am currently working as a Solution Developer at Sintelix, a leading provider of text analytics software. My role involves work across the full stack, from UI development to backend services and data pipelines. Here are some highlights of my work:\n`)
-                       .echo(` - Developing natural language processing scripts using Sintelix\'s domain-specific NLP language`)
-                       .echo(` - Building and configuring custom NLP pipelines to ingest data, extract entities from unstructured text, and build graph networks`)
-                       .echo(` - Developing JavaScript applications to abstract complex text intelligence pipelines, working with NLP and graph APIs`)
-                       .echo(` - Contributing to the development of a major open-source intelligence product, including web harvesting, NLP, data analysis, and UI development.`)
+                  .echo(` - Developing natural language processing scripts using Sintelix\'s domain-specific NLP language`)
+                  .echo(` - Building and configuring custom NLP pipelines to ingest data, extract entities from unstructured text, and build graph networks`)
+                  .echo(` - Developing JavaScript applications to abstract complex text intelligence pipelines, working with NLP and graph APIs`)
+                  .echo(` - Contributing to the development of a major open-source intelligence product, including web harvesting, NLP, data analysis, and UI development.`)
             },
             CDSIRC() {
                terminal.echo(`I worked as the Senior Data Analyst at the CDSIRC, Department for Education, from 2020 to 2023. I was responsible for managing the organisation\'s data and digital outputs. Here are some highlights of my work:\n`)
-                       .echo(` - I developed a data capture system and database, massively improving the efficiency of data collection, validation, and analysis. This involved using REDCap, SQL, Python, R, and Microsoft Azure.`)
-                       .echo(` - I designed and built a website to present CDSIRC's annual report. I learned basic JavaScript, HTML, and CSS to create a simple and effective site, and transformed the data into interactive visualisations using Plotly.\nPrior to this, the annual report was presented as a PDF document!`)
-                       .echo(` - I built and deployed a series of containerised web apps to streamline and automate several data processing tasks which previously took 10s of hours per month.`)
+                  .echo(` - I developed a data capture system and database, massively improving the efficiency of data collection, validation, and analysis. This involved using REDCap, SQL, Python, R, and Microsoft Azure.`)
+                  .echo(` - I designed and built a website to present CDSIRC's annual report. I learned basic JavaScript, HTML, and CSS to create a simple and effective site, and transformed the data into interactive visualisations using Plotly.\nPrior to this, the annual report was presented as a PDF document!`)
+                  .echo(` - I built and deployed a series of containerised web apps to streamline and automate several data processing tasks which previously took 10s of hours per month.`)
             },
             PhD() {
                terminal.echo(`I completed my PhD in Neuroscience at the University of Adelaide in 2020. I developed valuable skills in data analysis, research, project management, communication, problem-solving, and programming, and I apply them to my life and work every day.`);
@@ -105,11 +128,11 @@ const commands = {
 
          this.push({
             help() {
-               terminal.echo(`List of available commands: ${formatter.format(['help', 'exit', 'Software', 'PhD', 'BSc'].map(cmd => { return `<white class="command">${cmd}</white>` }))}`);
+               terminal.echo(`List of available commands: ${formatter.format(['help', 'exit', 'Software', 'PhD', 'BSc'].map(cmd => { return `<white class="command">${cmd}</white>` }))}`, {delay: 20, typing: true});
             },
             Software() {
                terminal.echo(`I am a self-taught developer with a passion for learning and creating new things. I started writing code to process and analyse data during my PhD and never looked back.`)
-                       .echo(`I have experience in data science, data engineering, and full-stack development. I particularly enjoy building beautiful and intuitive web applications using modern technologies like React and Svelte.`);
+                  .echo(`I have experience in data science, data engineering, and full-stack development. I particularly enjoy building beautiful and intuitive web applications using modern technologies like React and Svelte.`);
             },
             PhD() {
                terminal.echo(`I completed my PhD in Neuroscience at the University of Adelaide in 2020. My research focused on the impacts of\nperinatal stress on the development of neuroplasticity and other neurophysiological markers.\nI published several scientific papers and presented my work at national and international conferences.\n`);
@@ -152,15 +175,15 @@ const directories = {
       '<white>Projects</white>',
       [
          ['Terminal Portfolio',
-            '* You are here',
+            'https://github.com/rareallele/terminal-portfolio',
             'A fun way to show my resume in a terminal emulator while showcasing my JavaScript skills'
          ],
          ['JagoIQ',
-            '* <a href="https://jagoiq.com">JagoIQ</a> *',
-            'Operational micro-SaaS business selling custom web chatbots for small businesses.\nWebsite built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar integration, Stripe payments, and an email contact form.'
+            'https://jagoiq.com',
+            'Operational micro-SaaS business selling custom web chatbots for small businesses.\nWebsite built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar integration, Stripe payments, and an email API.'
          ],
          ['CDSIRC Annual Report website',
-            '* <a href="https://cdsirc.sa.gov.au/annual-report-2021-22/index.html">CDSIRC Annual Report</a> *',
+            'https://cdsirc.sa.gov.au/annual-report-2021-22/index.html',
             'A simple website to present the CDSIRC\'s annual report. Built with pure HTML, CSS, and JavaScript, with interactive visualisations using Plotly.'
          ]
       ].map(([name, url, description = '']) => {
@@ -237,9 +260,9 @@ terminal.on('click', '.command', function () {
    const command = $(this).text();
    terminal.exec(command);
 })
-terminal.on('click', '.directory', function() {
-    const dir = $(this).text();
-    terminal.exec(`cd ~/${dir}`);
+terminal.on('click', '.directory', function () {
+   const dir = $(this).text();
+   terminal.exec(`cd ~/${dir}`);
 });
 
 /* ------ helper functions ------ */
