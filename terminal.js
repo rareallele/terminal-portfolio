@@ -108,7 +108,7 @@ const commands = {
             CDSIRC() {
                terminal.echo(`I worked as the Senior Data Analyst at the CDSIRC, Department for Education, from 2020 to 2023. I was responsible for managing the organisation\'s data and digital outputs. Here are some highlights of my work:\n`)
                   .echo(` - I developed a data capture system and database, massively improving the efficiency of data collection, validation, and analysis. This involved using REDCap, SQL, Python, R, and Microsoft Azure.`)
-                  .echo(` - I designed and built a website to present CDSIRC's annual report. I learned basic JavaScript, HTML, and CSS to create a simple and effective site, and transformed the data into interactive visualisations using Plotly.\nPrior to this, the annual report was presented as a PDF document!`)
+                  .echo(` - I designed and built a <a href="https://cdsirc.sa.gov.au/annual-report-2021-22/index.html">website</a> to present CDSIRC's annual report. I learned basic JavaScript, HTML, and CSS to create a simple and effective site, and transformed the data into interactive visualisations using Plotly.\nPrior to this, the annual report was presented as a PDF document!`)
                   .echo(` - I built and deployed a series of containerised web apps to streamline and automate several data processing tasks which previously took 10s of hours per month.`)
             },
             PhD() {
@@ -263,6 +263,7 @@ terminal.on('click', '.command', function () {
 terminal.on('click', '.directory', function () {
    const dir = $(this).text();
    terminal.exec(`cd ~/${dir}`);
+   terminal.exec('ls');
 });
 
 /* ------ helper functions ------ */
