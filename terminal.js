@@ -180,7 +180,7 @@ const directories = {
          ],
          ['JagoIQ',
             'https://jagoiq.com',
-            'Operational micro-SaaS business selling custom web chatbots for small businesses.\nWebsite built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar integration, Stripe payments, and an email API.'
+            'Operational micro-SaaS business selling AI-powered chatbots for small businesses.\nWebsite built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar booking, Stripe, and email API integrations.'
          ],
          ['CDSIRC Annual Report website',
             'https://cdsirc.sa.gov.au/annual-report-2021-22/index.html',
