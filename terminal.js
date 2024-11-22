@@ -145,6 +145,14 @@ const commands = {
             name: 'education'
          })
       },
+      projects() {
+         terminal.exec(`cd ~/projects`);
+         terminal.exec('ls');
+      },
+      skills () {
+         terminal.exec(`cd ~/skills`);
+         terminal.exec('ls');
+      },
       hire() {
          terminal.echo(`<white>I am always open to new opportunities, and I'd love to have a chat. Please contact me at 0430202697 or drjagovandam@gmail.com.</white>`);
       }
@@ -180,7 +188,11 @@ const directories = {
          ],
          ['JagoIQ',
             'https://jagoiq.com',
-            'Operational micro-SaaS business selling AI-powered chatbots for small businesses.\nWebsite built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar booking, Stripe, and email API integrations.'
+            'Operational micro-SaaS business selling AI-powered chatbots for small businesses. Website built with React, Next.js, Shadcn and Tailwind CSS. Includes calendar booking, Stripe, and email API integrations.'
+         ],
+         ['SOAPro',
+            'https://github.com/rareallele/',
+            'SaaS product offering automated, AI-powered generation of clinical session notes. Built with React, Next.js, Node.js, and Supabase.'
          ],
          ['CDSIRC Annual Report website',
             'https://cdsirc.sa.gov.au/annual-report-2021-22/index.html',
@@ -194,7 +206,6 @@ const directories = {
    skills: [
       '',
       '<white>languages</white>',
-
       [
          'JavaScript',
          'TypeScript',
